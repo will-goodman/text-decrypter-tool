@@ -9,6 +9,7 @@ import java.io.IOException;
  */
 public interface DecryptionAlgorithm {
 
+
     /**
      * Decrypts a given String
      *

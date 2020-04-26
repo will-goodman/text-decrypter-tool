@@ -12,6 +12,8 @@ import java.util.*;
  */
 public class NearestFrequency implements DecryptionAlgorithm {
 
+    public final static String NAME = "Nearest Frequency";
+
     private HashMap<Character, Float> characterFrequencies;
 
 

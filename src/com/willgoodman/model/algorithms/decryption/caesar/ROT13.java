@@ -11,6 +11,8 @@ import java.io.*;
  */
 public class ROT13 implements DecryptionAlgorithm {
 
+    public final static String NAME = "ROT13";
+
 
     /**
      * Decrypts a given String

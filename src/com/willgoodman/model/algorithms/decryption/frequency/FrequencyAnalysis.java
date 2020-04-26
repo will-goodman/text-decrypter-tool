@@ -12,6 +12,8 @@ import java.util.*;
  */
 public class FrequencyAnalysis implements DecryptionAlgorithm {
 
+    public final static String NAME = "Frequency Analysis";
+
     private Set<Character> mostFrequentCharacters;
 
 

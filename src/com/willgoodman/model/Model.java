@@ -14,20 +14,8 @@ import java.util.*;
  */
 public class Model {
 
-    /**
-     * Enum for character frequency based algorithms
-     */
-    public enum FrequencyAlgorithm {
-        FREQUENCY_ANALYSIS, NEAREST_FREQUENCY
-    }
-
-
-    /**
-     * Enum for algorithms which do not require additional information other than the source text
-     */
-    public enum RegularAlgorithm {
-        ROT13
-    }
+    public final static Set<String> REGULAR_ALGORITHMS = new HashSet<>(Arrays.asList(ROT13.NAME));
+    public final static Set<String> FREQUENCY_ALGORITHMS = new HashSet<>(Arrays.asList(FrequencyAnalysis.NAME, NearestFrequency.NAME));
 
 
     /**
@@ -37,9 +25,9 @@ public class Model {
      * @param algorithm The algorithm to use
      * @return The plain text
      */
-    public String decrypt(String encrypted, RegularAlgorithm algorithm) {
+    public String decrypt(String encrypted, String algorithm) {
         switch (algorithm) {
-            case ROT13:
+            case ROT13.NAME:
                 return new ROT13().decrypt(encrypted);
             default:
                 return encrypted;
@@ -54,12 +42,12 @@ public class Model {
      * @param algorithm The algorithm to use
      * @throws IOException Throws if there is an error reading from the source file
      */
-    public void decrypt(String srcFilename, String outFilename, RegularAlgorithm algorithm) throws IOException {
+    public void decrypt(String srcFilename, String outFilename, String algorithm) throws IOException {
         File srcFile = new File(srcFilename);
 
         if (srcFile.isFile()) {
             switch (algorithm) {
-                case ROT13:
+                case ROT13.NAME:
                     new ROT13().decrypt(srcFilename, outFilename);
             }
         }
@@ -74,14 +62,14 @@ public class Model {
      * @param characterFrequencies The characters and their frequencies in regular text
      * @return The plain text
      */
-    public String decrypt(String encrypted, FrequencyAlgorithm algorithm, HashMap<Character, Float> characterFrequencies) {
+    public String decrypt(String encrypted, String algorithm, HashMap<Character, Float> characterFrequencies) {
         switch (algorithm) {
-            case FREQUENCY_ANALYSIS:
+            case FrequencyAnalysis.NAME:
                 ArrayList<Character> uniqueCharacters = new ArrayList<>(characterFrequencies.keySet());
                 uniqueCharacters.sort(Comparator.comparing(characterFrequencies::get));
                 Collections.reverse(uniqueCharacters);
                 return new FrequencyAnalysis(new LinkedHashSet<>(uniqueCharacters)).decrypt(encrypted);
-            case NEAREST_FREQUENCY:
+            case NearestFrequency.NAME:
                 return new NearestFrequency(characterFrequencies).decrypt(encrypted);
             default:
                 return encrypted;
@@ -98,17 +86,17 @@ public class Model {
      * @param characterFrequencies The characters and their frequencies in regular text
      * @throws IOException Throws if there is an error reading from the source file
      */
-    public void decrypt(String srcFilename, String outFilename, FrequencyAlgorithm algorithm, HashMap<Character, Float> characterFrequencies) throws IOException {
+    public void decrypt(String srcFilename, String outFilename, String algorithm, HashMap<Character, Float> characterFrequencies) throws IOException {
         File srcFile = new File(srcFilename);
 
         if (srcFile.isFile()) {
             switch (algorithm) {
-                case FREQUENCY_ANALYSIS:
+                case FrequencyAnalysis.NAME:
                     ArrayList<Character> uniqueCharacters = new ArrayList<>(characterFrequencies.keySet());
                     uniqueCharacters.sort(Comparator.comparing(characterFrequencies::get));
                     Collections.reverse(uniqueCharacters);
                     new FrequencyAnalysis(new LinkedHashSet<>(uniqueCharacters)).decrypt(srcFilename, outFilename);
-                case NEAREST_FREQUENCY:
+                case NearestFrequency.NAME:
                     new NearestFrequency(characterFrequencies).decrypt(srcFilename, outFilename);
             }
         }
