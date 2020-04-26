@@ -17,7 +17,7 @@ public class Model {
     /**
      * Enum for character frequency based algorithms
      */
-    private enum FrequencyAlgorithm {
+    public enum FrequencyAlgorithm {
         FREQUENCY_ANALYSIS, NEAREST_FREQUENCY
     }
 
@@ -25,27 +25,9 @@ public class Model {
     /**
      * Enum for algorithms which do not require additional information other than the source text
      */
-    private enum RegularAlgorithm {
+    public enum RegularAlgorithm {
         ROT13
     }
-
-
-    /**
-     * Gets the available character frequency based algorithms
-     *
-     * @return The frequency algorithms
-     */
-    public FrequencyAlgorithm[] getFrequencyAlgorithms() {
-        return FrequencyAlgorithm.values();
-    }
-
-
-    /**
-     * Gets the available algorithms which only require the source text as input
-     *
-     * @return The regular algorithms
-     */
-    public RegularAlgorithm[] getRegularAlgorithms() { return RegularAlgorithm.values(); }
 
 
     /**
